@@ -15,7 +15,7 @@ int main(void)
 
     st1.sid = 2;
     //st.name = "lisi";   //error
-    //给结构体中的字符串复制需要用strcpy方法, 上面要引入 string.h
+    //给结构体中的字符串f赋值需要用strcpy方法, 上面要引入 string.h
     strcpy(st1.name, "lisi");
     st1.age = 22;
 

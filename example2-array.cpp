@@ -18,5 +18,10 @@ int main(void)
         printf("%d\n", a[i]); //等价于*(a + i)
     }
 
+    /*
+        输出:
+        1
+        2
+    */
     showArray(a, 2);
 }
