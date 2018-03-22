@@ -23,7 +23,7 @@ int main(void)
     //第三种方式
     //等价于(*pst1).sid = 99;,也等价于st1.sid = 99;
     pst1->sid = 99;
-
+    
     printf("%d \n", st1.sid); //98
 
     return 0;
