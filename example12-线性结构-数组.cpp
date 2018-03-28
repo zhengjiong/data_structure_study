@@ -15,6 +15,7 @@ bool isFull(struct Arr *pArr);
 bool append(struct Arr *pArr, int value);               //追加数据
 bool insert(struct Arr *pArr, int position, int value); //插入一条数据
 bool deleteArr(struct Arr *pArr, int position, int *deleteValue);
+void inversionArr(struct Arr *pArr); //倒置
 
 int main(void)
 {
@@ -26,6 +27,19 @@ int main(void)
     append(&arr, 4);
     showArr(&arr);
     insert(&arr, 2, 9);
+    showArr(&arr);
+    int deleteValue;
+    if (deleteArr(&arr, 5, &deleteValue))
+    {
+        printf("删除成功\n");
+        printf("您删除的元素是: %d\n", deleteValue);
+    }
+    else
+    {
+        printf("删除失败\n");
+    }
+    showArr(&arr);
+    inversionArr(&arr);
     showArr(&arr);
     return 0;
 }
@@ -126,9 +140,36 @@ bool deleteArr(struct Arr *pArr, int position, int *deleteValue)
         return false;
     }
 
-    if (position < 1 || position >= pArr->cnt)
+    if (position < 1 || position > pArr->cnt)
     {
         printf("删除失败");
         return false;
+    }
+
+    //获取被删除的值
+    *deleteValue = pArr->pBase[position - 1];
+
+    for (int i = position; i < pArr->cnt; i--)
+    {
+        pArr->pBase[i - 1] = pArr->pBase[i];
+    }
+    pArr->cnt--;
+
+    return true;
+}
+
+//倒置
+void inversionArr(struct Arr *pArr)
+{
+    int i = 0;
+    int j = pArr->cnt - 1;
+
+    while (i < j)
+    {
+        int a = pArr->pBase[i];
+        pArr->pBase[i] = pArr->pBase[j];
+        pArr->pBase[j] = a;
+        i++;
+        j++;
     }
 }
