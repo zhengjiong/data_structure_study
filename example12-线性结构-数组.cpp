@@ -16,6 +16,8 @@ bool append(struct Arr *pArr, int value);               //追加数据
 bool insert(struct Arr *pArr, int position, int value); //插入一条数据
 bool deleteArr(struct Arr *pArr, int position, int *deleteValue);
 void inversionArr(struct Arr *pArr); //倒置
+void sortAsc1(struct Arr *pArr);     //升序排列(冒泡排序第1种)
+void sortAsc2(struct Arr *pArr);     //升序排列(冒泡排序第2种)
 
 int main(void)
 {
@@ -171,5 +173,39 @@ void inversionArr(struct Arr *pArr)
         pArr->pBase[j] = a;
         i++;
         j++;
+    }
+}
+
+//升序排列(冒泡排序第一种)
+void sortAsc1(struct Arr *pArr)
+{
+    for (int i = 0; i < pArr->cnt - 1; i++)
+    {
+        for (int j = i + 1; j < pArr->cnt; j++)
+        {
+            if (pArr->pBase[i] > pArr->pBase[j])
+            {
+                int temp = pArr->pBase[i];
+                pArr->pBase[i] = pArr->pBase[j];
+                pArr->pBase[j] = temp;
+            }
+        }
+    }
+}
+
+//升序排列(冒泡排序第2种)
+void sortAsc2(struct Arr *pArr)
+{
+    for (int i = 0; i < pArr->cnt; i++)
+    {
+        for (int j = 0; j < pArr->cnt - 1 - i; j++)
+        {
+            if (pArr->pBase[j] > pArr->pBase[j + 1])
+            {
+                int t = pArr->pBase[j];
+                pArr->pBase[j] = pArr->pBase[j + 1];
+                pArr->pBase[j + 1] = t;
+            }
+        }
     }
 }
