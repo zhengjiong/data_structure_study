@@ -26,13 +26,28 @@ int main(void)
 
     if (isEmpty(pHead))
     {
-        printf("为空");
+        printf("为空\n");
     }
     else
     {
-        printf("不为空");
+        printf("不为空\n");
     }
     printf("数量=%d\n", length(pHead));
+
+    //在第三个位置插入一个99
+    insert(pHead, 3, 99);
+    int deleteVal;
+    if(deleteValue(pHead, 1, &deleteVal)){
+        printf("删除成功, 删除的值为%d\n", deleteVal);
+    }else{
+        printf("删除失败");
+    }
+
+    //升序排练
+    sortAsc(pHead);
+    //遍历
+    traverseList(pHead);
+
     return 0;
 }
 
@@ -110,4 +125,84 @@ int length(PNODE pHead)
         p = p->pNext;
     }
     return i;
+}
+
+//冒泡排序, 升序排列
+void sortAsc(PNODE pHead)
+{
+    PNODE p, q;
+    int i, j;
+    int len = length(pHead);
+
+    for (i = 0, p = pHead->pNext; i < len - 1; i++, p = p->pNext)
+    {
+        for (j = i + 1, q = p->pNext; j < len; j++, q = q->pNext)
+        {
+            if (p->data > q->data)
+            {
+                int temp = p->data;
+                p->data = q->data;
+                q->data = temp;
+            }
+        }
+    }
+}
+
+//第二个参数是位置, 第三个参数是要插入的值
+//position的值从1开始
+bool insert(PNODE pHead, int position, int value)
+{
+    int i = 0;
+    PNODE p = pHead;
+
+    while (NULL != p && i < position - 1)
+    {
+        p = p->pNext;
+        ++i;
+    }
+
+    if (i > position - 1 || NULL == p)
+    {
+        return false;
+    }
+    PNODE pNew = (PNODE)malloc(sizeof(NODE));
+    if (NULL == pNew)
+    {
+        printf("动态分配内存失败\n");
+        exit(-1);
+    }
+
+    pNew->data = value;
+    PNODE q = p->pNext;
+    p->pNext = pNew;
+    pNew->pNext = q;
+
+    return true;
+}
+
+bool deleteValue(PNODE pHead, int position, int *value)
+{
+    int i = 0;
+    PNODE p = pHead;
+
+    while (NULL != p->pNext && i < position - 1)
+    {
+        p = p->pNext;
+        ++i;
+    }
+
+    if (i > position - 1 || NULL == p->pNext)
+    {
+        return false;
+    }
+
+    PNODE q = p->pNext;
+    *value = q->data;
+    //value = &(p->data);
+
+    p->pNext = p->pNext->pNext;
+    free(q);
+    q = NULL;
+
+    return true;
 }
